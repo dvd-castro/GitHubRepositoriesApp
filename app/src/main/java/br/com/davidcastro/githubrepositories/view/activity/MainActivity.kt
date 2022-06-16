@@ -12,11 +12,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         installSplashScreen()
+        initSupportActionBar()
+
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()
         }
+    }
+
+    private fun initSupportActionBar() {
+        supportActionBar?.setIcon(R.drawable.ic_github)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = "Repositories"
     }
 }
