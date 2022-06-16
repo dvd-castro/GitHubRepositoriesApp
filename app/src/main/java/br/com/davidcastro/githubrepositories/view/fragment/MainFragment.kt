@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.davidcastro.githubrepositories.data.model.GitHubRepositoriesItemModel
+import br.com.davidcastro.githubrepositories.data.model.Items
 import br.com.davidcastro.githubrepositories.databinding.FragmentMainBinding
 import br.com.davidcastro.githubrepositories.view.adapter.RepositoriesAdapter
 import br.com.davidcastro.githubrepositories.viewModel.MainViewModel
@@ -50,7 +50,7 @@ class MainFragment : Fragment() {
         viewModel.repositories.observe(viewLifecycleOwner,::setRepositoriesList)
     }
 
-    private fun setRepositoriesList(list: List<GitHubRepositoriesItemModel>){
+    private fun setRepositoriesList(list: List<Items>){
         repositoriesAdapter.submitList(list)
     }
 
