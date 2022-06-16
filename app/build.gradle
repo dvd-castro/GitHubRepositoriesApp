@@ -66,4 +66,6 @@ dependencies {
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    implementation "joda-time:joda-time:2.10.13"
+
 }
