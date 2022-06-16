@@ -1,10 +1,10 @@
-package br.com.davidcastro.githubrepositories.presenter.view.activity
+package br.com.davidcastro.githubrepositories.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import br.com.davidcastro.githubrepositories.R
-import br.com.davidcastro.githubrepositories.presenter.view.fragment.MainFragment
+import br.com.davidcastro.githubrepositories.view.fragment.MainFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -2,18 +2,19 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:layout_marginBottom="12dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginHorizontal="16dp"
-    android:padding="16dp"
+    android:layout_marginTop="16dp"
+    android:background="@color/white"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/iv_icon"
@@ -21,26 +22,26 @@
             android:layout_height="54dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:src="@drawable/ic_launcher_background" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textAllCaps="true"
             android:layout_marginStart="16dp"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="TextView"
             app:layout_constraintStart_toEndOf="@+id/iv_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="TextView"
             app:layout_constraintStart_toEndOf="@+id/iv_icon"
             app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
@@ -58,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="TextView"
+            tools:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/iv_star"
             app:layout_constraintStart_toEndOf="@+id/iv_star"
             app:layout_constraintTop_toTopOf="@+id/iv_star" />
@@ -78,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="TextView"
+            tools:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/iv_fork"
             app:layout_constraintStart_toEndOf="@+id/iv_fork"
             app:layout_constraintTop_toTopOf="@+id/iv_fork" />
@@ -98,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            tools:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cg_topics" />
 
@@ -106,3 +107,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
+
+
+
+

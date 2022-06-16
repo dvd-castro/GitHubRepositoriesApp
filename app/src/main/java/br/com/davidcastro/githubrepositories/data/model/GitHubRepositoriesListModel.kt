@@ -1,4 +1,4 @@
-package br.com.davidcastro.githubrepositories.domain.model
+package br.com.davidcastro.githubrepositories.data.model
 
 import com.google.gson.annotations.SerializedName
 

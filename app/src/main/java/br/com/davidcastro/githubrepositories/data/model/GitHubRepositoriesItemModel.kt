@@ -1,4 +1,4 @@
-package br.com.davidcastro.githubrepositories.domain.model
+package br.com.davidcastro.githubrepositories.data.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -10,5 +10,5 @@ data class GitHubRepositoriesItemModel(
     @SerializedName("forks") val forksCount: Int,
     @SerializedName("svn_url") val repositoryUrl: String,
     @SerializedName("updated_at") val lastUpdate: String,
-    @SerializedName("topics") val topics: String
+//    @SerializedName("topics") val topics: String
 )
