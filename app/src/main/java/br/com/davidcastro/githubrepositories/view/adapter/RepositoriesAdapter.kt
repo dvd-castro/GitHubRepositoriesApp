@@ -1,25 +1,42 @@
 package br.com.davidcastro.githubrepositories.view.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import br.com.davidcastro.githubrepositories.R
 import br.com.davidcastro.githubrepositories.data.model.Items
+import br.com.davidcastro.githubrepositories.data.model.ShowMoreCallBack
 import br.com.davidcastro.githubrepositories.databinding.RepositoryItemViewBinding
 import com.google.android.material.chip.Chip
 import com.squareup.picasso.Picasso
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
-class RepositoriesAdapter: ListAdapter<Items, RepositoriesAdapter.RepositoriesViewHolder>(DiffUtil) {
+class RepositoriesAdapter(private val showMoreCallBack: ShowMoreCallBack): ListAdapter<Items, RepositoriesAdapter.RepositoriesViewHolder>(DiffUtil) {
+
+    fun setList(items: List<Items>) {
+        val list = currentList.toMutableList()
+        list.addAll(items)
+        this.submitList(list)
+    }
+
+    fun getLastItemPosition(): Int = itemCount - 1
+
+    private fun isLastItem(position: Int): Boolean = position == itemCount - 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoriesViewHolder =
-        RepositoriesViewHolder(RepositoriesViewHolder.inflateViewBinding(parent))
+        RepositoriesViewHolder(RepositoriesViewHolder.inflateViewBinding(parent), showMoreCallBack)
 
-    override fun onBindViewHolder(holder: RepositoriesViewHolder, position: Int) =
-        holder.bind(getItem(position))
+    override fun onBindViewHolder(holder: RepositoriesViewHolder, position: Int) {
+        holder.bind(getItem(position), isLastItem(position))
+    }
 
-    class RepositoriesViewHolder(private val binding: RepositoryItemViewBinding): RecyclerView.ViewHolder(binding.root) {
+    class RepositoriesViewHolder(
+        private val binding: RepositoryItemViewBinding,
+        private val showMoreCallBack: ShowMoreCallBack
+    ): RecyclerView.ViewHolder(binding.root) {
 
         companion object {
             internal fun inflateViewBinding(parent: ViewGroup): RepositoryItemViewBinding {
@@ -27,14 +44,25 @@ class RepositoriesAdapter: ListAdapter<Items, RepositoriesAdapter.RepositoriesVi
             }
         }
 
-        fun bind(itemModel: Items) {
+        fun bind(itemModel: Items, lastItem: Boolean) {
             binding.tvName.text = itemModel.name
             binding.tvDescription.text = itemModel.description
             binding.tvForks.text = itemModel.forksCount.toString()
             binding.tvStars.text = itemModel.starsCount.toString()
             binding.tvLastCommit.text = fillDateWithStringFormat(itemModel.lastUpdate)
+
             fillImageWithPicasso(itemModel.owner.avatarUrl)
             fillChipGroupTopics(itemModel.topics)
+            showMore(lastItem)
+        }
+
+        private fun showMore(lastItem: Boolean) {
+            if(lastItem) {
+                binding.loader.visibility = View.VISIBLE
+                showMoreCallBack.showMore()
+            } else{
+                binding.loader.visibility = View.GONE
+            }
         }
 
         private fun fillDateWithStringFormat(dateString: String): String {
@@ -52,7 +80,7 @@ class RepositoriesAdapter: ListAdapter<Items, RepositoriesAdapter.RepositoriesVi
         }
 
         private fun fillImageWithPicasso(url: String) {
-            Picasso.get().load(url).into(binding.ivIcon)
+            Picasso.get().load(url).placeholder(R.drawable.ic_image).into(binding.ivIcon)
         }
     }
 
