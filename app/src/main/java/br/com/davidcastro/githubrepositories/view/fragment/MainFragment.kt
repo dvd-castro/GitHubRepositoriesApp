@@ -36,6 +36,7 @@ class MainFragment : Fragment(),ShowMoreCallBack {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         getData()
         setObservables()
         initUi()
@@ -74,6 +75,6 @@ class MainFragment : Fragment(),ShowMoreCallBack {
     }
 
     override fun showMore() {
-        getData()
+        viewModel.showMore()
     }
 }

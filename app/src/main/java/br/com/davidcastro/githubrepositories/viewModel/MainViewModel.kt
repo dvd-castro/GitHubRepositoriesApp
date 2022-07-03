@@ -16,9 +16,23 @@ class MainViewModel(private val api: Repository): ViewModel() {
     val repositories = _repositories
 
     private var _page = 1
-    val page = _page
 
     fun getRepositories() {
+        viewModelScope.launch {
+            try {
+                if(repositories.value.isNullOrEmpty()) {
+                    val result = api.getRepositories(_page)
+                    processResponse(result)
+
+                    Log.d("${result.code()}: RESULT -> ", "${result.body()}")
+                }
+            } catch (ex: Exception) {
+                Log.d("ERROR -> ", "${ex.message}")
+            }
+        }
+    }
+
+    fun showMore() {
         viewModelScope.launch {
             try {
                 val result = api.getRepositories(_page)
@@ -35,7 +49,7 @@ class MainViewModel(private val api: Repository): ViewModel() {
     private fun processResponse(result: Response<GitHubRepositoriesListModel>) {
         when(result.code()) {
             200 -> { result.body()?.items?.toMutableList()?.let { _repositories.postValue(it) } }
-            422 -> {}
+            in 400 .. 499 -> {}
             else -> {}
         }
     }
