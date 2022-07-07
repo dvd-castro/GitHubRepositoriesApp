@@ -3,6 +3,7 @@ package br.com.davidcastro.githubrepositories.data.model
 import com.google.gson.annotations.SerializedName
 
 data class GitHubRepositoriesItem(
+    @SerializedName("id") val id: String,
     @SerializedName("name") val name: String,
     @SerializedName("owner") val gitHubRepositoriesOwner: GitHubRepositoriesOwner,
     @SerializedName("description") val description: String,

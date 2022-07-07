@@ -16,11 +16,8 @@ import org.joda.time.format.DateTimeFormat
 
 class RepositoriesAdapter(private val showMoreCallBack: ShowMoreCallBack): ListAdapter<GitHubRepositoriesItem, RepositoriesAdapter.RepositoriesViewHolder>(DiffUtil) {
 
-    fun setList(items: MutableList<GitHubRepositoriesItem>) {
-        val list = currentList.toMutableList()
-        list.addAll(items)
-        this.submitList(list)
-    }
+    fun setList(items: MutableList<GitHubRepositoriesItem>) =
+        this.submitList(items.toList())
 
     fun getLastItemPosition(): Int = itemCount - 1
 
@@ -29,9 +26,8 @@ class RepositoriesAdapter(private val showMoreCallBack: ShowMoreCallBack): ListA
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoriesViewHolder =
         RepositoriesViewHolder(RepositoriesViewHolder.inflateViewBinding(parent), showMoreCallBack)
 
-    override fun onBindViewHolder(holder: RepositoriesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RepositoriesViewHolder, position: Int) =
         holder.bind(getItem(position), isLastItem(position))
-    }
 
     class RepositoriesViewHolder(
         private val binding: RepositoryItemViewBinding,
@@ -39,9 +35,9 @@ class RepositoriesAdapter(private val showMoreCallBack: ShowMoreCallBack): ListA
     ): RecyclerView.ViewHolder(binding.root) {
 
         companion object {
-            internal fun inflateViewBinding(parent: ViewGroup): RepositoryItemViewBinding {
-                return RepositoryItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            }
+            internal fun inflateViewBinding(parent: ViewGroup): RepositoryItemViewBinding =
+                RepositoryItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         }
 
         fun bind(itemModel: GitHubRepositoriesItem, lastItem: Boolean) {
@@ -79,9 +75,8 @@ class RepositoriesAdapter(private val showMoreCallBack: ShowMoreCallBack): ListA
             }
         }
 
-        private fun fillImageWithPicasso(url: String) {
+        private fun fillImageWithPicasso(url: String) =
             Picasso.get().load(url).placeholder(R.drawable.ic_image).into(binding.ivIcon)
-        }
     }
 
     object DiffUtil: androidx.recyclerview.widget.DiffUtil.ItemCallback<GitHubRepositoriesItem>() {
@@ -89,7 +84,7 @@ class RepositoriesAdapter(private val showMoreCallBack: ShowMoreCallBack): ListA
             oldItem: GitHubRepositoriesItem,
             newItem: GitHubRepositoriesItem
         ): Boolean =
-            oldItem.repositoryUrl == newItem.repositoryUrl
+            oldItem.id == newItem.id
 
 
         override fun areContentsTheSame(

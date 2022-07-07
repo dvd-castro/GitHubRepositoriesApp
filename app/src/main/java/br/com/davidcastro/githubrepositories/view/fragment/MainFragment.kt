@@ -8,7 +8,7 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.davidcastro.githubrepositories.R
-import br.com.davidcastro.githubrepositories.data.model.Items
+import br.com.davidcastro.githubrepositories.data.model.GitHubRepositoriesItem
 import br.com.davidcastro.githubrepositories.data.model.ShowMoreCallBack
 import br.com.davidcastro.githubrepositories.databinding.FragmentMainBinding
 import br.com.davidcastro.githubrepositories.view.adapter.RepositoriesAdapter
@@ -54,9 +54,9 @@ class MainFragment : Fragment(),ShowMoreCallBack {
         viewModel.repositories.observe(viewLifecycleOwner,::setRepositoriesList)
     }
 
-    private fun setRepositoriesList(list: List<Items>) {
-        repositoriesAdapter.setList(list)
+    private fun setRepositoriesList(list: MutableList<GitHubRepositoriesItem>) {
         cancelShowMoreLoader()
+        repositoriesAdapter.setList(list)
     }
 
     private fun setRecyclerView() {
