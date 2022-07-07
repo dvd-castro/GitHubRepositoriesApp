@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.davidcastro.githubrepositories.R
-import br.com.davidcastro.githubrepositories.data.model.Items
+import br.com.davidcastro.githubrepositories.data.model.GitHubRepositoriesItem
 import br.com.davidcastro.githubrepositories.data.model.ShowMoreCallBack
 import br.com.davidcastro.githubrepositories.databinding.RepositoryItemViewBinding
 import com.google.android.material.chip.Chip
@@ -14,9 +14,9 @@ import com.squareup.picasso.Picasso
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
-class RepositoriesAdapter(private val showMoreCallBack: ShowMoreCallBack): ListAdapter<Items, RepositoriesAdapter.RepositoriesViewHolder>(DiffUtil) {
+class RepositoriesAdapter(private val showMoreCallBack: ShowMoreCallBack): ListAdapter<GitHubRepositoriesItem, RepositoriesAdapter.RepositoriesViewHolder>(DiffUtil) {
 
-    fun setList(items: List<Items>) {
+    fun setList(items: MutableList<GitHubRepositoriesItem>) {
         val list = currentList.toMutableList()
         list.addAll(items)
         this.submitList(list)
@@ -24,7 +24,7 @@ class RepositoriesAdapter(private val showMoreCallBack: ShowMoreCallBack): ListA
 
     fun getLastItemPosition(): Int = itemCount - 1
 
-    private fun isLastItem(position: Int): Boolean = position == itemCount - 1
+    private fun isLastItem(position: Int): Boolean = position == getLastItemPosition()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoriesViewHolder =
         RepositoriesViewHolder(RepositoriesViewHolder.inflateViewBinding(parent), showMoreCallBack)
@@ -44,14 +44,14 @@ class RepositoriesAdapter(private val showMoreCallBack: ShowMoreCallBack): ListA
             }
         }
 
-        fun bind(itemModel: Items, lastItem: Boolean) {
+        fun bind(itemModel: GitHubRepositoriesItem, lastItem: Boolean) {
             binding.tvName.text = itemModel.name
             binding.tvDescription.text = itemModel.description
             binding.tvForks.text = itemModel.forksCount.toString()
             binding.tvStars.text = itemModel.starsCount.toString()
             binding.tvLastCommit.text = fillDateWithStringFormat(itemModel.lastUpdate)
 
-            fillImageWithPicasso(itemModel.owner.avatarUrl)
+            fillImageWithPicasso(itemModel.gitHubRepositoriesOwner.avatarUrl)
             fillChipGroupTopics(itemModel.topics)
             showMore(lastItem)
         }
@@ -84,17 +84,17 @@ class RepositoriesAdapter(private val showMoreCallBack: ShowMoreCallBack): ListA
         }
     }
 
-    object DiffUtil: androidx.recyclerview.widget.DiffUtil.ItemCallback<Items>() {
+    object DiffUtil: androidx.recyclerview.widget.DiffUtil.ItemCallback<GitHubRepositoriesItem>() {
         override fun areItemsTheSame(
-            oldItem: Items,
-            newItem: Items
+            oldItem: GitHubRepositoriesItem,
+            newItem: GitHubRepositoriesItem
         ): Boolean =
             oldItem.repositoryUrl == newItem.repositoryUrl
 
 
         override fun areContentsTheSame(
-            oldItem: Items,
-            newItem: Items
+            oldItem: GitHubRepositoriesItem,
+            newItem: GitHubRepositoriesItem
         ): Boolean =
            oldItem == newItem
     }

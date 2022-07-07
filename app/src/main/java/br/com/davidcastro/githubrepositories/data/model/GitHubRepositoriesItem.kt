@@ -2,9 +2,9 @@ package br.com.davidcastro.githubrepositories.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Items(
+data class GitHubRepositoriesItem(
     @SerializedName("name") val name: String,
-    @SerializedName("owner") val owner: Owner,
+    @SerializedName("owner") val gitHubRepositoriesOwner: GitHubRepositoriesOwner,
     @SerializedName("description") val description: String,
     @SerializedName("stargazers_count") val starsCount: Int,
     @SerializedName("forks") val forksCount: Int,
