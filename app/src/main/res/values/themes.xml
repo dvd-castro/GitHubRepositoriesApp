@@ -2,7 +2,9 @@
 
     <style name="Theme.SplashScreenApi" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/black</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/gray</item>
         <item name="postSplashScreenTheme">@style/Theme.GithubRepositories</item>
     </style>
 

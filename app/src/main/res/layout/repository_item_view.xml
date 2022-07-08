@@ -34,7 +34,7 @@
                     android:id="@+id/iv_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:src="@drawable/ic_launcher_background" />
+                    tools:src="@drawable/ic_image" />
 
             </com.google.android.material.card.MaterialCardView>
 
