@@ -47,6 +47,7 @@ class MainFragment : Fragment(),ShowMoreCallBack {
     }
 
     private fun getData() {
+        showLoader()
         viewModel.getRepositories()
     }
 
@@ -56,6 +57,7 @@ class MainFragment : Fragment(),ShowMoreCallBack {
 
     private fun setRepositoriesList(list: MutableList<GitHubRepositoriesItem>) {
         cancelShowMoreLoader()
+        cancelLoader()
         repositoriesAdapter.setList(list)
     }
 
@@ -76,5 +78,19 @@ class MainFragment : Fragment(),ShowMoreCallBack {
 
     override fun showMore() {
         viewModel.showMore()
+    }
+
+    private fun showLoader() {
+        binding.rvRepositories.visibility = View.GONE
+        binding.loaderShimmer.visibility = View.VISIBLE
+        binding.loaderShimmer.startShimmer()
+    }
+
+    private fun cancelLoader() {
+        if(binding.loaderShimmer.isShimmerVisible) {
+            binding.rvRepositories.visibility = View.VISIBLE
+            binding.loaderShimmer.visibility = View.GONE
+            binding.loaderShimmer.hideShimmer()
+        }
     }
 }

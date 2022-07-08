@@ -22,8 +22,8 @@ class MainViewModel(private val api: Repository): ViewModel() {
     private var page = getCurrentPageInCache()
 
     fun getRepositories() {
-        if(!containsListInCache()) {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            if(!containsListInCache()) {
                 try {
                     if(repositories.value.isNullOrEmpty()) {
                         val result = api.getRepositories(page)
@@ -34,10 +34,10 @@ class MainViewModel(private val api: Repository): ViewModel() {
                 } catch (ex: Exception) {
                     Log.d("ERROR -> ", "${ex.message}")
                 }
-            }
-        } else {
-            if(isFirstRequest()) {
-                postValueRepositories(getListInCache())
+            } else {
+                if(isFirstRequest()) {
+                    postValueRepositories(getListInCache())
+                }
             }
         }
     }
@@ -69,8 +69,6 @@ class MainViewModel(private val api: Repository): ViewModel() {
         }
     }
 
-    private fun isFirstRequest(): Boolean = _repositories.value.isNullOrEmpty()
-
     private fun postValueRepositories(list: MutableList<GitHubRepositoriesItem>) {
         if(!isFirstRequest()) {
             val repositories = _repositories.value
@@ -94,6 +92,8 @@ class MainViewModel(private val api: Repository): ViewModel() {
 
         addCurrentPageInCache()
     }
+
+    private fun isFirstRequest(): Boolean = _repositories.value.isNullOrEmpty()
 
     private fun getListInCache(): MutableList<GitHubRepositoriesItem> =
         HawkUtil.get(GITHUB_REPOSITORIES_IN_CACHE) ?: mutableListOf()
