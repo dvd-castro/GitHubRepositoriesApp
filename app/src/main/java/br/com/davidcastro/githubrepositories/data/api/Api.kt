@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface Api {
-    @GET("repositories?q=language:kotlin&sort=stars")
+    @GET("search/repositories?q=language:kotlin&sort=stars")
     suspend fun getRepositories(
         @Query("page") page: Int
     ): Response<GitHubRepositoriesList>

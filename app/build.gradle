@@ -3,13 +3,16 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
-    compileSdk 32
+    compileSdk 31
 
     defaultConfig {
         applicationId "br.com.davidcastro.githubrepositories"
         minSdk 23
-        targetSdk 32
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -17,6 +20,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            resValue("string", "base_url", localProperties["BASE_URL"])
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
