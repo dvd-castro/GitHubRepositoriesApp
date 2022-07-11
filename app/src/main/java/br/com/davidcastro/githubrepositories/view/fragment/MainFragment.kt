@@ -4,18 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.davidcastro.githubrepositories.R
 import br.com.davidcastro.githubrepositories.data.model.GitHubRepositoriesItem
-import br.com.davidcastro.githubrepositories.data.model.ShowMoreCallBack
+import br.com.davidcastro.githubrepositories.view.model.ShowMoreCallBack
 import br.com.davidcastro.githubrepositories.databinding.FragmentMainBinding
 import br.com.davidcastro.githubrepositories.view.adapter.RepositoriesAdapter
+import br.com.davidcastro.githubrepositories.view.model.LastItemBehaviorEnum
 import br.com.davidcastro.githubrepositories.viewModel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : Fragment(),ShowMoreCallBack {
+class MainFragment : Fragment(), ShowMoreCallBack {
 
     private lateinit var binding: FragmentMainBinding
     private val viewModel: MainViewModel by viewModel()
@@ -52,11 +55,12 @@ class MainFragment : Fragment(),ShowMoreCallBack {
     }
 
     private fun setObservables() {
+        viewModel.errorOnShowMore.observe(viewLifecycleOwner,::setLastItemBehavior)
         viewModel.repositories.observe(viewLifecycleOwner,::setRepositoriesList)
     }
 
     private fun setRepositoriesList(list: MutableList<GitHubRepositoriesItem>) {
-        cancelShowMoreLoader()
+        setLastItemBehavior(LastItemBehaviorEnum.HIDE_LOADER)
         cancelLoader()
         repositoriesAdapter.setList(list)
     }
@@ -69,11 +73,42 @@ class MainFragment : Fragment(),ShowMoreCallBack {
         }
     }
 
-    private fun cancelShowMoreLoader() {
+    private fun setLastItemBehavior(behavior: LastItemBehaviorEnum) {
         val lastItemVisible = binding.rvRepositories.layoutManager
             ?.findViewByPosition(repositoriesAdapter.getLastItemPosition())
 
-        lastItemVisible?.findViewById<ProgressBar>(R.id.loader)?.visibility = View.GONE
+        val loaderLayout = lastItemVisible?.findViewById<ProgressBar>(R.id.loader)
+        val errorLayout = lastItemVisible?.findViewById<LinearLayout>(R.id.ln_error)
+        val textEndList = lastItemVisible?.findViewById<TextView>(R.id.tv_end_list)
+
+        when(behavior) {
+            LastItemBehaviorEnum.HIDE_LOADER -> loaderLayout?.visibility = View.GONE
+            LastItemBehaviorEnum.HIDE_ERROR -> errorLayout?.visibility = View.GONE
+
+            LastItemBehaviorEnum.SHOW_END -> {
+                loaderLayout?.visibility = View.GONE
+                textEndList?.visibility = View.VISIBLE
+            }
+
+            LastItemBehaviorEnum.SHOW_LOADER -> {
+                loaderLayout?.visibility = View.VISIBLE
+                errorLayout?.visibility = View.GONE
+            }
+
+            LastItemBehaviorEnum.SHOW_ERROR -> {
+                loaderLayout?.visibility = View.GONE
+
+                errorLayout?.let {
+                    it.visibility = View.VISIBLE
+
+                    it.setOnClickListener {
+                        showMore()
+                        loaderLayout?.visibility = View.VISIBLE
+                        errorLayout.visibility = View.GONE
+                    }
+                }
+            }
+        }
     }
 
     override fun showMore() {

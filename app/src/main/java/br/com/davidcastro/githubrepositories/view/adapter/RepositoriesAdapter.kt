@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.davidcastro.githubrepositories.R
 import br.com.davidcastro.githubrepositories.data.model.GitHubRepositoriesItem
-import br.com.davidcastro.githubrepositories.data.model.ShowMoreCallBack
+import br.com.davidcastro.githubrepositories.view.model.ShowMoreCallBack
 import br.com.davidcastro.githubrepositories.databinding.RepositoryItemViewBinding
 import com.google.android.material.chip.Chip
 import com.squareup.picasso.Picasso

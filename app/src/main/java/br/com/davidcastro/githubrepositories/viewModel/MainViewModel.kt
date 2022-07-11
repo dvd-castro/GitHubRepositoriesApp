@@ -8,6 +8,7 @@ import br.com.davidcastro.githubrepositories.data.model.GitHubRepositoriesList
 import br.com.davidcastro.githubrepositories.data.model.GitHubRepositoriesItem
 import br.com.davidcastro.githubrepositories.data.repository.Repository
 import br.com.davidcastro.githubrepositories.helpers.HawkUtil
+import br.com.davidcastro.githubrepositories.view.model.LastItemBehaviorEnum
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -18,6 +19,10 @@ class MainViewModel(private val api: Repository): ViewModel() {
 
     private var _repositories = MutableLiveData<MutableList<GitHubRepositoriesItem>>()
     val repositories = _repositories
+
+    private var _errorOnShowMore = MutableLiveData(LastItemBehaviorEnum.DEFAULT)
+    val errorOnShowMore = _errorOnShowMore
+
 
     private var page = getCurrentPageInCache()
 
@@ -48,7 +53,7 @@ class MainViewModel(private val api: Repository): ViewModel() {
                 page += 1
                 val result = api.getRepositories(page)
                 processResponse(result)
-                Log.d("${result.code()}: RESULT -> ", "${result.body()}")
+                Log.d("${result.code()}: RESULT -> ", "$result")
 
             } catch (ex: Exception) {
                 Log.d("ERROR -> ", "${ex.message}")
@@ -64,8 +69,8 @@ class MainViewModel(private val api: Repository): ViewModel() {
                     addListInCache(it)
                 }
             }
-            in 400 .. 499 -> {}
-            else -> {}
+            422 -> _errorOnShowMore.postValue(LastItemBehaviorEnum.SHOW_END)
+            in 500 .. 599 -> _errorOnShowMore.postValue(LastItemBehaviorEnum.SHOW_ERROR)
         }
     }
 
