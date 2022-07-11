@@ -6,7 +6,7 @@ GitHub Repositories
 <!-- Subtitle/Description -->
 <h4>APP de estudos.</h4>
 
-<img  width="50%"  src="https://i.imgur.com/NxvSONA.png">
+<img  width="50%"  src="https://i.imgur.com/8BBDOpw.png">
 </div>
 
 ---
