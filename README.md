@@ -21,15 +21,8 @@ GitHub Repositories
 - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Componente de arquitetura android
 - [Coroutines](https://developer.android.com/kotlin/coroutines) - Execução de tarefas assíncronas
 - [Retrofit](https://square.github.io/retrofit) - Integração com API
--[Shimmer Effect](https://facebook.github.io/shimmer-android/) - Shimmer Effect
--[Core SplashScreen](https://medium.com/android-dev-br/implementando-a-core-splashscreen-api-642c7f8c581b) - SplashScreen nativa sem activity
-
-
-### ℹ️ informações importantes
-
-<p>
-Dados como rota e token da api utilizadas, estão ausentes desse repositório por questões de segurança., então caso você queira rodar para testar, recomendo baixar o app na <a href="https://play.google.com/store/apps/details?id=br.com.davidcastro.meurastreio">Play Store</a>.
-</p>
+- [Shimmer Effect](https://facebook.github.io/shimmer-android/) - Shimmer Effect
+- [Core SplashScreen](https://medium.com/android-dev-br/implementando-a-core-splashscreen-api-642c7f8c581b) - SplashScreen nativa sem activity
 
 <div align="center">
 <p><i>Developed by <a href="https://www.linkedin.com/in/dvdcastro/">David Castro</i></p>
