@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:paddingVertical="16dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardview"
@@ -27,6 +27,7 @@
                 android:layout_height="54dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0dp"
+                android:layout_marginStart="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -43,6 +44,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -56,6 +58,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:minLines="2"
@@ -69,6 +72,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_description"
                 app:srcCompat="@drawable/ic_star" />
@@ -116,8 +120,9 @@
                     android:id="@+id/cg_topics"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:singleLine="true"
-                    app:chipSpacingHorizontal="8dp"/>
+                    android:paddingHorizontal="16dp"
+                    app:chipSpacingHorizontal="8dp"
+                    app:singleLine="true" />
 
             </HorizontalScrollView>
 
@@ -126,6 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 tools:text="TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/topics_scrollview" />

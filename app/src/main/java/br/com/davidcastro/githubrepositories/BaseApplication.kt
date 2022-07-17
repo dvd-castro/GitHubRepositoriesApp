@@ -1,8 +1,9 @@
 package br.com.davidcastro.githubrepositories
 
 import android.app.Application
+import android.content.Context
 import br.com.davidcastro.githubrepositories.data.di.module
-import br.com.davidcastro.githubrepositories.helpers.HawkUtil
+import com.orhanobut.hawk.Hawk
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -15,10 +16,10 @@ class BaseApplication: Application() {
             modules(module)
         }
 
-        initHawk()
+        initHawk(this)
     }
 
-    private fun initHawk() {
-        HawkUtil.init(this@BaseApplication)
+    private fun initHawk(context: Context) {
+        Hawk.init(context).build()
     }
 }

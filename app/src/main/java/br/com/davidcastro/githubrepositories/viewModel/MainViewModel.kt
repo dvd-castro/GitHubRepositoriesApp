@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import br.com.davidcastro.githubrepositories.data.model.GitHubRepositoriesList
 import br.com.davidcastro.githubrepositories.data.model.GitHubRepositoriesItem
 import br.com.davidcastro.githubrepositories.data.repository.Repository
-import br.com.davidcastro.githubrepositories.helpers.HawkUtil
 import br.com.davidcastro.githubrepositories.view.model.LastItemBehaviorEnum
+import com.orhanobut.hawk.Hawk
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -22,7 +22,6 @@ class MainViewModel(private val api: Repository): ViewModel() {
 
     private var _errorOnShowMore = MutableLiveData(LastItemBehaviorEnum.DEFAULT)
     val errorOnShowMore = _errorOnShowMore
-
 
     private var page = getCurrentPageInCache()
 
@@ -90,9 +89,9 @@ class MainViewModel(private val api: Repository): ViewModel() {
         if(containsListInCache()) {
             val list = getListInCache()
             list.addAll(obj)
-            HawkUtil.add(GITHUB_REPOSITORIES_IN_CACHE, list)
+            Hawk.put(GITHUB_REPOSITORIES_IN_CACHE, list)
         } else {
-            HawkUtil.add(GITHUB_REPOSITORIES_IN_CACHE, obj)
+            Hawk.put(GITHUB_REPOSITORIES_IN_CACHE, obj)
         }
 
         addCurrentPageInCache()
@@ -101,14 +100,14 @@ class MainViewModel(private val api: Repository): ViewModel() {
     private fun isFirstRequest(): Boolean = _repositories.value.isNullOrEmpty()
 
     private fun getListInCache(): MutableList<GitHubRepositoriesItem> =
-        HawkUtil.get(GITHUB_REPOSITORIES_IN_CACHE) ?: mutableListOf()
+        Hawk.get(GITHUB_REPOSITORIES_IN_CACHE) ?: mutableListOf()
 
     private fun containsListInCache() =
-        HawkUtil.contains(GITHUB_REPOSITORIES_IN_CACHE)
+        Hawk.contains(GITHUB_REPOSITORIES_IN_CACHE)
 
     private fun addCurrentPageInCache() =
-        HawkUtil.add(CURRENT_PAGE, page)
+        Hawk.put(CURRENT_PAGE, page)
 
     private fun getCurrentPageInCache() =
-        if(HawkUtil.contains(CURRENT_PAGE)) HawkUtil.get(CURRENT_PAGE) else 1
+        if(Hawk.contains(CURRENT_PAGE)) Hawk.get(CURRENT_PAGE) else 1
 }
